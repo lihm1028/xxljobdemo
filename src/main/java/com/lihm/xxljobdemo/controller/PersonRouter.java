@@ -31,6 +31,7 @@ public class PersonRouter {
     public RouterFunction<ServerResponse> personRouters() {
         return RouterFunctions.route()
                 .GET("/person/{id}", RequestPredicates.accept(MediaType.APPLICATION_JSON), personHandler::getPerson)
+                .GET("/person/fail/{id}", RequestPredicates.accept(MediaType.APPLICATION_JSON), personHandler::getPerson)
                 .GET("/persons", RequestPredicates.accept(MediaType.APPLICATION_JSON), personHandler::getAllPerson)
                 .POST("/person/createPerson", personHandler::createPerson)
                 .POST("/person/create",RequestPredicates.accept(MediaType.APPLICATION_JSON), personHandler::create)

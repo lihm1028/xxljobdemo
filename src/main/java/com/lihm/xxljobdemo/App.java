@@ -5,17 +5,19 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.web.reactive.config.EnableWebFlux;
 
 /**
  * Hello world!
  */
 @SpringBootApplication
+@EnableWebFlux
 public class App {
 
 
     public static void main(String[] args) {
 
-//        SpringApplication.run(App.class, args);
+        SpringApplication.run(App.class, args);
 
 
         // 1.指定web应用类型为响应式
@@ -25,9 +27,9 @@ public class App {
 
 
 //         2.指定web应用类型为响应式
-        ConfigurableApplicationContext context = new SpringApplicationBuilder().sources(App.class)
-                .web(WebApplicationType.REACTIVE)
-                .run(args);
+//        ConfigurableApplicationContext context = new SpringApplicationBuilder().sources(App.class)
+//                .web(WebApplicationType.REACTIVE)
+//                .run(args);
 
 
     }

@@ -63,9 +63,13 @@ public class PersonHandler {
      */
     public Mono<ServerResponse> getPerson(ServerRequest request) {
         String id = request.pathVariable("id");
+        Integer num = Integer.parseInt(request.queryParam("num").orElse(null));
+
+        int i = num.intValue() % 2;
         Person person = personRepository.findById(id)
                 .orElse(null);
-        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).bodyValue(person)
+        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(person)
                 .switchIfEmpty(ServerResponse.notFound().build());
 
     }

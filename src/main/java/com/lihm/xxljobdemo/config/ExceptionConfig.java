@@ -6,10 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 
 @Slf4j
@@ -66,6 +63,24 @@ public class ExceptionConfig {
     public RestResult<Object> runtimeException(Exception ex) {
         String message = StringUtils.isEmpty(ex.getMessage()) ? "系统错误" : ex.getMessage();
         RestResult result = RestResult.fail(-3, message);
+        log.error("SharedException error", ex);
+        return result;
+    }
+
+
+    /**
+     * 捕获异常
+     *
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(NumberFormatException.class)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    @Order(value = 5)
+    public RestResult<Object> runtimeException(NumberFormatException ex) {
+        String message = StringUtils.isEmpty(ex.getMessage()) ? "NumberFormatException系统错误" : ex.getMessage();
+        RestResult result = RestResult.fail(-4, message);
         log.error("SharedException error", ex);
         return result;
     }
