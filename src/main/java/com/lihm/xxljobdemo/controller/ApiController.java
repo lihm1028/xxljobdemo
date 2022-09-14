@@ -6,6 +6,7 @@ import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,11 @@ import java.util.Map;
 @RestController
 public class ApiController {
 
+
+    @GetMapping("/hello")
+    public Mono<String> hello() {
+        return Mono.just("Welcome to reactive world ~");
+    }
 
     @GetMapping("/test")
     public RestResult<Map> test() {
