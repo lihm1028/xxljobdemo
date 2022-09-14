@@ -30,10 +30,12 @@ public class PersonHandler {
      */
     public Mono<ServerResponse> createPerson(ServerRequest request) {
         Mono<Person> person = request.bodyToMono(Person.class);
-        Person block = person.block();
-        Person save = personRepository.save(block);
-        return ok().body(save, Person.class);
 
+        Mono<ServerResponse> flatMap = person.flatMap(p -> {
+            Person save = personRepository.save(p);
+            return ok().contentType(MediaType.APPLICATION_JSON).bodyValue(save);
+        });
+        return flatMap;
     }
 
     /**
@@ -46,7 +48,8 @@ public class PersonHandler {
         Mono<Person> person = request.bodyToMono(Person.class);
         Mono<ServerResponse> flatMap = person.flatMap(p -> {
             Validate.notBlank(p.getId(), "id不能为空");
-            return ok().body(personRepository.save(p), Person.class);
+            return ok().contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue(personRepository.save(p));
         });
         return flatMap;
     }
